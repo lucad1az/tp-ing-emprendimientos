@@ -1,0 +1,127 @@
+.main {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+}
+
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    padding-left: 30px;
+    align-items: center;
+
+}
+
+.headerLeft{
+    width: 20%;
+}
+
+.header p{
+    font-size: 20px;
+}
+
+.header .userName{
+    font-weight: bold;
+}
+
+.headerRight{
+    display: flex;
+    width: 80%;
+    font-size: 20px;
+    align-items: end;
+    justify-content: end;
+    padding-right: 60px;
+}
+
+.headerRight ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.headerRight ul li {
+    display: flex;
+    margin-left: 20px;
+}
+
+.headerRight ul li a {
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.headerRight ul li a:hover{
+    transition: 0.3s;
+    color: orangered;
+}
+
+
+.mi-emprendimiento {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    height: 300px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+
+.mi-emprendimiento span{
+    color: #282c34;
+    font-weight: bold;
+}
+
+.title {
+    height: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+.datosEmprendimiento{
+    display: flex;
+    flex-direction: column;
+}
+
+.datosEmprendimiento,
+.redesSocialesEmprendimiento {
+    margin-bottom: 20px;
+}
+
+.datos {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.redesSocialesEmprendimiento {
+    padding-top: 10px;
+}
+
+.redesSocialesEmprendimiento p {
+    margin-bottom: 10px;
+}
+
+.redesSocialesEmprendimiento h3 {
+    margin-bottom: 10px;
+}
+
+.redesSocialesEmprendimiento p:last-child {
+    margin-right: 0;
+}
+
