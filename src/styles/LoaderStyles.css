@@ -5,11 +5,30 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #282c34;
-
+    position: relative;
 }
 
-h1{
+.loader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/public/bannerEmprendimientos.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(8px) saturate(1);
+    z-index: -1;
+}
+
+.loader-circle {
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
     color: white;
     font-weight: bold;
     margin-bottom: 30px;

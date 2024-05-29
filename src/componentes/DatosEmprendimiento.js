@@ -31,7 +31,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
   };
 
   return (
-    <div className="w-100">
+    <div className="w-100" data-aos="fade-in" data-aos-duration="1200">
       <h1 className="mb-5">Ingrese los datos de su emprendimiento</h1>
       <div className="contenedor-datos">
 

@@ -7,9 +7,11 @@ import Box from '@mui/material/Box';
 function Loader() {
     return (
         <div className='loader'>
-            <h1>¡Bienvenido!</h1>
+        <h1>¡Bienvenido!</h1>
+        <div className="loader-circle">
             <CircularProgress />
         </div>
+    </div>
 
     )
 }

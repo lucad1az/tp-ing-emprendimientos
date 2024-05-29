@@ -1,72 +1,69 @@
-import React from "react";
-import HomePageStyles from "../styles/HomePageStyles.css"
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import emprendimientos from '../emprendimientos/emprendimientos.json';
+import '../styles/HomePageStyles.css';
+import PaymentIcon from '@mui/icons-material/Payment';
 
-function HomePage({ userData, datosEmprendimiento }) {
+
+function HomePage() {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredEmprendimientos, setFilteredEmprendimientos] = useState(emprendimientos);
+
+    useEffect(() => {
+        const results = emprendimientos.filter(emprendimiento =>
+            emprendimiento.nombreEmprendimiento.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            emprendimiento.rubro.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredEmprendimientos(results);
+    }, [searchTerm]);
+
     return (
-        <div className="main">
-            <header className="header">
-                <div className="headerLeft">
-                    <p className="headerHello">¡Hola <span className="userName">{userData.nombre}</span>!</p>
-                </div>
-                <div className="headerRight">
-                    <ul>
-                        <li>
-                            <a href="#">Mi emprendimiento</a>
-                        </li>
-                        <li>
-                            <a href="#">Mis medios de pago</a>
-                        </li>
-
-                    </ul>
+        <div className="home-container" data-aos="fade-in" data-aos-duration="1600">
+            <header className="header" >
+                <div className="logo">Emprende <span style={{ color: "#428bca", fontWeight: "bold" }}>UNGS</span></div>
+                <div className="buttons">
+                    <Link to="/">
+                        <button className="btn">Inicio</button>
+                    </Link>
                 </div>
             </header>
-
-            <div className="mi-emprendimiento">
-                <div className="title">
-                    <h2>Tu emprendimiento</h2>
+            <div className="banner-container" data-aos="fade-in">
+                <div className='banner-title'>
+                    <h1>Bienvenido al Portal de Emprendimientos</h1>
                 </div>
-                <div className="datosEmprendimiento">
-                    <span>Nombre</span>
-                    <p className="datos">{datosEmprendimiento.nombreEmprendimiento}</p>
-                    <span>Descripción</span>
-                    <p className="datos">{datosEmprendimiento.descripcion}</p>
-                    <span>Rubro</span>
-                    <p className="datos">{datosEmprendimiento.rubro}</p>
-                    <span>Formas de pago</span>
-                    <p className="datos">{datosEmprendimiento.formasDePago}</p>
-                  
-                  
-                </div>
-
-                <div>
-                    <span>Dirección</span>
-                    <p className="datos">{datosEmprendimiento.direccionEmprendimiento}</p>
-                    <span>Teléfono</span>
-                    <p className="datos">{datosEmprendimiento.telefonoEmprendimiento}</p>
-                    <span>Email</span>
-                    <p className="datos">{datosEmprendimiento.mailEmprendimiento}</p>
-                    </div>
-
-                <div className="redesSocialesEmprendimiento">
-                    <span>Facebook</span>
-                    <p className="datos">@{datosEmprendimiento.facebook}</p>
-                    <span>Tiktok</span>
-                    <p className="datos">@{datosEmprendimiento.tiktok}</p>
-                    <span>Instagram</span>
-                    <p className="datos">@{datosEmprendimiento.instagram}</p>
-                    <span>Twitter</span>
-                    <p className="datos">@{datosEmprendimiento.twitter}</p>
-                </div>
+                <div className='banner'></div>
+                <Link to="/registro" data-aos="fade-in">
+                    <button className="btn btn-registrar">Registrarme como colaborador</button>
+                </Link>
             </div>
-
-            <div className="explorar">
-                <div className="titleExplorar">
-                    <h2>Explora los emprendimientos disponibles</h2>
-                </div>
-                
+            <div className="search-container" data-aos="fade-in" data-aos-duration="1600">
+                <SearchIcon className="search-icon" />
+                <input
+                    type="text"
+                    placeholder="Buscar emprendimiento por nombre o rubro"
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
+                />
             </div>
-        </div>
-    )
+            <div className="emprendimientos-container" data-aos="fade-right" data-aos-duration="1600">
+                {filteredEmprendimientos
+                    .sort((a, b) => b.isFeatured - a.isFeatured)
+                    .map((emprendimiento, index) => (
+                        <Link to={`/detalle/${index}`} key={index} className="card-link">
+                            <div className="card">
+                                {emprendimiento.isFeatured && <div className="featured-badge">★ DESTACADO</div>}
+                                <h3 className={emprendimiento.isFeatured ? 'featured-title' : ''}>
+                                    {emprendimiento.nombreEmprendimiento}
+                                </h3>
+                                <p>{emprendimiento.rubro}</p>
+                                <p><PaymentIcon /> {emprendimiento.formasDePago}</p>
+                            </div>
+                        </Link>
+                    ))}
+            </div>
+        </div >
+    );
 }
 
 export default HomePage;

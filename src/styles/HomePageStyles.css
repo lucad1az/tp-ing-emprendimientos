@@ -1,127 +1,196 @@
-.main {
-    display: flex;
-    height: 100vh;
+@import url('https://fonts.googleapis.com/css?family=Lato:100&display=swap');
+body {
+    background-color: #282c34;
+    color: #f0f0f0;
+    font-family: sans-serif;
+  }
+  
+  .home-container {
     width: 100%;
-    flex-direction: column;
-}
-
-.header{
-    width: 100%;
+    padding: 0 20px;
+  }
+  
+  .header {
     display: flex;
     justify-content: space-between;
-    height: 100px;
-    padding-left: 30px;
     align-items: center;
-
-}
-
-.headerLeft{
-    width: 20%;
-}
-
-.header p{
-    font-size: 20px;
-}
-
-.header .userName{
+    padding: 15px 0;
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .logo {
+    font-size: 1.8em;
     font-weight: bold;
-}
-
-.headerRight{
-    display: flex;
-    width: 80%;
-    font-size: 20px;
-    align-items: end;
-    justify-content: end;
-    padding-right: 60px;
-}
-
-.headerRight ul{
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
-.headerRight ul li {
-    display: flex;
-    margin-left: 20px;
-}
-
-.headerRight ul li a {
-    text-decoration: none;
+    color: #fff;
+  }
+  
+  .buttons .btn {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #428bca;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s;
+  }
+  
+  .buttons .btn:hover {
+    background-color: #3a77b2;
     color: white;
-    transition: 0.3s;
-}
-
-.headerRight ul li a:hover{
-    transition: 0.3s;
-    color: orangered;
-}
-
-
-.mi-emprendimiento {
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: row;
-    height: 300px;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
-
-
-.mi-emprendimiento span{
-    color: #282c34;
-    font-weight: bold;
-}
-
-.title {
-    height: 100%;
-    display:flex;
-    align-items: center;
-    justify-content: center;
+  }
+  
+  .banner-container {
+    width: 100%;
+    position: relative;
+  }
+  
+  .banner {
+    width: 100%;
+    height: 400px;
+    background-image: url(/public/bannerEmprendimientos.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(6px) saturate(1);
+  }
+  
+  .banner-title {
+    color: #fff;
+    font-size: 2em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
     text-align: center;
-    margin-bottom: 20px;
-}
+  }
 
-.title h2 {
-    color: #333;
-    font-size: 24px;
-}
+  .banner-title h1 {
+    color: #fff;
+    font-size: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    white-space: nowrap;
+  }
+  
+  .btn-registrar {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
-.datosEmprendimiento{
+  .btn-registrar {
+    border-radius: 4px;
+    background-color: #428bca;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    padding: 12px 30px;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin: 36px auto;
+    box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-registrar:hover {
+    background-color: #3a77b2;
+    color: white;
+  }
+  
+  .search-container {
+    margin-top: 60px;
     display: flex;
-    flex-direction: column;
-}
-
-.datosEmprendimiento,
-.redesSocialesEmprendimiento {
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
-}
 
-.datos {
-    margin-bottom: 10px;
-    color: #555;
-}
+  }
+  
+  .search-container input {
+    padding: 10px;
+    width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    background-color: #333;
+    color: #f0f0f0;
+  }
+  
+  .search-icon {
+    margin-right: 10px;
+    color: #fff;
+  }
+  
+  .emprendimientos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 350px;
+    height: 200px;
+    background-color: #333;
+    text-align: center;
+    color: #fff;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 8px rgba(66, 139, 202, 0.4);
 
-.redesSocialesEmprendimiento {
-    padding-top: 10px;
-}
+  }
 
-.redesSocialesEmprendimiento p {
-    margin-bottom: 10px;
+  .featured-title {
+    margin-top: 35px;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(66, 139, 202, 0.6);
 }
-
-.redesSocialesEmprendimiento h3 {
-    margin-bottom: 10px;
+.featured-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #428bca;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8em;
 }
+  
 
-.redesSocialesEmprendimiento p:last-child {
-    margin-right: 0;
-}
+  h1, h2, h3 {
+    color: #fff;
+    margin-bottom: 15px;
+  }
+  
+  .content {
+    color: #f0f0f0;
+    line-height: 1.5;
+  }
+  
 
+  a {
+    color: #428bca;
+    transition: color 0.3s;
+  }
+  
+  a:hover {
+    color: #3a77b2;
+  }

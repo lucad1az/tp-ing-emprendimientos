@@ -26,7 +26,7 @@ function DatosPersonales({ handleSiguiente, userData, handleUserDataChange }) {
 
 
   return (
-    <div className="w-100">
+    <div className="w-100" data-aos="fade-in" data-aos-duration="1600">
       <h1 className="mb-5">Ingrese sus datos personales</h1>
       <div className="contenedor-datos">
         <div className="datos-izq">

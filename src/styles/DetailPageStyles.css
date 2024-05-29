@@ -1,0 +1,129 @@
+/* DetailPageStyles.css */
+
+.detail-page {
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .detail-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #444;
+  }
+  
+  .detail-header h1 {
+    margin: 0;
+  }
+  
+  .btn-volver {
+    background-color: #61dafb;
+    color: #000;
+    border: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+  
+  .btn-volver:hover {
+    background-color: #21a1f1;
+    color: white;
+    transition: 0.3s;
+  }
+  
+  .detail-container {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+  }
+  
+  .detail-info, .detail-map {
+    flex: 1;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 10px;
+  }
+
+  .detail-info{
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .redes{
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+  }
+
+  .redes ul{
+    display: flex;
+    margin-top: 10px;
+  }
+
+  .redes ul li {
+    margin-left: 15px;
+    padding: 5px;
+  }
+
+  .redes ul li a{
+    color: white;
+    text-decoration: none;
+  }
+  
+  
+  .detail-info h2 {
+    margin-bottom: 20px;
+  }
+  
+  .detail-info ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .detail-info ul li {
+    margin-bottom: 10px;
+  }
+  
+  .detail-info ul li strong {
+    font-weight: bold;
+  }
+  
+  .detail-info ul li ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+  
+  .detail-info ul li ul li {
+    margin-bottom: 5px;
+  }
+  
+
+  
+  .detail-info ul li ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .featured-badge {
+    background-color: #428bca;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+  }

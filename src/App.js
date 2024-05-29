@@ -1,11 +1,19 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import "./App.css";
 import DatosPersonales from "./componentes/DatosPersonales";
 import DatosEmprendimiento from "./componentes/DatosEmprendimiento";
 import Loader from "./componentes/Loader";
 import HomePage from "./componentes/HomePage";
+import DetailPage from "./componentes/DetailPage";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+    });
+  }, []);
   const [loading, setLoading] = useState(true);
   const [paso, setPaso] = useState(1);
   const [userData, setUserData] = useState({
@@ -29,8 +37,7 @@ function App() {
     twitter: '',
     tiktok: '',
     direccionEmprendimiento: '',
-
-  })
+  });
 
   useEffect(() => {
     handleLoading();
@@ -71,37 +78,32 @@ function App() {
   return (
     <div className="App">
       {loading ? <Loader /> :
-
-        <header className="App-header">
-          {paso === -1 ?
-            <div className="main">
-              <HomePage userData={userData} datosEmprendimiento={datosEmprendimiento}/>
-
-            </div>
-            :
-
-            <div className="end"></div>
-          }
-          {paso != -1 ?
-            <form className="form-container p-4 bg-dark text-light rounded">
-              {paso === 1 ?
-                <DatosPersonales
-                  handleSiguiente={handleSiguiente}
-                  userData={userData}
-                  handleUserDataChange={handleUserDataChange}
-                />
-                
-                :
-                <DatosEmprendimiento
-                  handleFinishForm={handleFinishForm}
-                  handleVolver={handleVolver}
-                  datosEmprendimiento={datosEmprendimiento}
-                  handleDatosEmprendimientoChange={handleDatosEmprendimientoChange} />
-
-              }
-            </form>
-            : <></>}
-        </header>
+        <Router>
+          <header className="App-header">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/detalle/:id" element={<DetailPage />} />
+              <Route path="/registro" element={
+                <form className="form-container p-4 bg-dark text-light rounded">
+                  {paso === 1 ?
+                    <DatosPersonales
+                      handleSiguiente={handleSiguiente}
+                      userData={userData}
+                      handleUserDataChange={handleUserDataChange}
+                    />
+                    :
+                    <DatosEmprendimiento
+                      handleFinishForm={handleFinishForm}
+                      handleVolver={handleVolver}
+                      datosEmprendimiento={datosEmprendimiento}
+                      handleDatosEmprendimientoChange={handleDatosEmprendimientoChange}
+                    />
+                  }
+                </form>
+              } />
+            </Routes>
+          </header>
+        </Router>
       }
     </div>
   );
