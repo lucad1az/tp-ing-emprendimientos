@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 function Loader() {
     return (
         <div className='loader'>
-        <h1>¡Bienvenido!</h1>
+        <h1>¡Gracias por registrarte! Estamos cargando tu información...</h1>
         <div className="loader-circle">
             <CircularProgress />
         </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import SugerenciasStyle from "../styles/SugerenciasStyle.css";
-import Loader from "./Loader";
+
 
 function NormalizarDireccion({handleCoordenadasChange, handleDireccionNormalizada}) {
     const [query, setQuery] = useState('');
@@ -45,9 +44,6 @@ function NormalizarDireccion({handleCoordenadasChange, handleDireccionNormalizad
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data.direccionesNormalizadas[0].coordenadas.x);
-                console.log(data.direccionesNormalizadas[0].coordenadas.y);
-
                 handleCoordenadasChange(data.direccionesNormalizadas[0].coordenadas.x, data.direccionesNormalizadas[0].coordenadas.y);
             } else {
                 console.error('Error al obtener las coordenadas', response.statusText);
@@ -68,7 +64,7 @@ function NormalizarDireccion({handleCoordenadasChange, handleDireccionNormalizad
                 placeholder="Escribe tu dirección"
             />
             {loading && <div>Cargando...</div>}
-            <select
+            <select style={{minWidth:"100px",width:"100%", marginTop:"10px", minHeight:"100px"}}
                 className="selectSugerencias"
                 id="sugerencias"
                 onChange={handleSugerenciasClick}

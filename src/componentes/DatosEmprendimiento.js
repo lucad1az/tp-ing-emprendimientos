@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Mapa from './Mapa';
 import rubros from '../static/rubros';
 import formas_de_pago from '../static/formas-de-pago';
-import { useState } from 'react';
 import NormalizarDireccion from './NormalizarDireccion';
 
-function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimiento, handleDatosEmprendimientoChange }) {
+function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimiento, handleDatosEmprendimientoChange, setCoordenadaXmain, setCoordenadaYmain }) {
 
   const [coordenadaX, setCoordenadaX] = useState(-58.700484309345335);
   const [coordenadaY, setCoordenadaY] = useState(-34.523109507513524);
-  const [direccionNormalizada, setDireccionNormalizada] = useState("")
+  const [direccionNormalizada, setDireccionNormalizada] = useState("");
+  const [logoPreview, setLogoPreview] = useState("");
 
   const handleChangeEmprendimiento = (event) => {
     const { name, value } = event.target;
@@ -24,11 +24,37 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
   const handleCoordenadasChange = (coordenadaX, coordenadaY) => {
     setCoordenadaX(coordenadaX);
     setCoordenadaY(coordenadaY);
+    setCoordenadaXmain(coordenadaX);
+    setCoordenadaYmain(coordenadaY);
   };
 
   const handleDireccionNormalizada = (direccion) => {
     setDireccionNormalizada(direccion);
   };
+
+  const handleFormasDePagoChange = (event) => {
+    const { options } = event.target;
+    const selectedFormasDePago = [];
+    for (const option of options) {
+      if (option.selected) {
+        selectedFormasDePago.push(option.value);
+      }
+    }
+    handleDatosEmprendimientoChange('formasDePago', selectedFormasDePago);
+  };
+
+  const handleLogoChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoPreview(reader.result);
+        handleDatosEmprendimientoChange('logo', reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   return (
     <div className="w-100" data-aos="fade-in" data-aos-duration="1200">
@@ -98,10 +124,11 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 id="formasDePago" 
                 name="formasDePago" 
                 className="form-control" 
+                multiple
                 value={datosEmprendimiento.formasDePago}
-                onChange={handleChangeEmprendimiento}
+                onChange={handleFormasDePagoChange}
+                style={{height:"100px"}}
               >
-                <option disabled hidden value="">Seleccione formas de pago aceptadas</option>
                 {formas_de_pago.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
               </select>
             </div>
@@ -121,19 +148,15 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
           </div>
           <div className="form-group mb-3 text-start">
             <label htmlFor="logo" className="form-label">Logo</label>
-            <div className="d-flex">
+            <div className="d-flex flex-column">
               <input 
                 id="logo" 
                 name="logo" 
-                type="text" 
+                type="file" 
                 className="form-control" 
-                placeholder="Cargue un logo para su emprendimiento" 
-                value={datosEmprendimiento.logo}
-                onChange={handleChangeEmprendimiento}
+                onChange={handleLogoChange}
               />
-              <span className="input-group-text" id="basic-addon1">
-                <img src="subir-logo.svg" alt="Logo emprendimiento" />
-              </span>
+              {logoPreview && <img src={logoPreview} alt="Vista previa del logo" className="mt-3" style={{ maxWidth: '200px' }} />}
             </div>
           </div>
           <div className="d-inline-flex mb-3">
@@ -167,7 +190,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
           <div className="d-inline-flex mb-3">
             <div className="text-start w-50 me-5">
               <label htmlFor="twitter" className="form-label">Twitter</label>
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-start">
                 <input 
                   id="twitter" 
                   name="twitter" 
@@ -179,33 +202,19 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 />
               </div>
             </div>
-            <div className="text-start w-50">
-              <label htmlFor="tiktok" className="form-label">Tiktok</label>
-              <div className="d-flex justify-content-center">
-                <input 
-                  id="tiktok" 
-                  name="tiktok" 
-                  type="text" 
-                  className="form-control" 
-                  placeholder="ej. @<usuario>" 
-                  value={datosEmprendimiento.tiktok}
-                  onChange={handleChangeEmprendimiento}
-                />
-              </div>
-            </div>
           </div>
         </div>
 
         <div className="datos-der">
-        <Mapa direccionNormalizada={direccionNormalizada} coordenadaX={coordenadaX} coordenadaY={coordenadaY} />
+          <Mapa direccionNormalizada={direccionNormalizada} coordenadaX={coordenadaX} coordenadaY={coordenadaY} />
           <div className="mb-5 text-start">
             <label htmlFor="direccionEmprendimiento" className="form-label">Ingrese la direccion del emprendimiento</label>
             <div className="d-flex justify-content-center">
-            <NormalizarDireccion
+              <NormalizarDireccion
                 value={datosEmprendimiento.direccionEmprendimiento}
                 onChange={handleChange}
-                handleCoordenadasChange = {handleCoordenadasChange}
-                handleDireccionNormalizada = {handleDireccionNormalizada}
+                handleCoordenadasChange={handleCoordenadasChange}
+                handleDireccionNormalizada={handleDireccionNormalizada}
               />
             </div>
           </div>

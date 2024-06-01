@@ -6,7 +6,7 @@ import '../styles/HomePageStyles.css';
 import PaymentIcon from '@mui/icons-material/Payment';
 
 
-function HomePage() {
+function HomePage({paso}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredEmprendimientos, setFilteredEmprendimientos] = useState(emprendimientos);
 
@@ -21,11 +21,8 @@ function HomePage() {
     return (
         <div className="home-container" data-aos="fade-in" data-aos-duration="1600">
             <header className="header" >
-                <div className="logo">Emprende <span style={{ color: "#428bca", fontWeight: "bold" }}>UNGS</span></div>
+                <div className="logo"> <span style={{ color: "#428bca", fontWeight: "bold" }}>UNGS</span> Emprende</div>
                 <div className="buttons">
-                    <Link to="/">
-                        <button className="btn">Inicio</button>
-                    </Link>
                 </div>
             </header>
             <div className="banner-container" data-aos="fade-in">
@@ -33,8 +30,9 @@ function HomePage() {
                     <h1>Bienvenido al Portal de Emprendimientos</h1>
                 </div>
                 <div className='banner'></div>
+                
                 <Link to="/registro" data-aos="fade-in">
-                    <button className="btn btn-registrar">Registrarme como colaborador</button>
+                    <button className="btn btn-registrar">{paso !== -1? 'Registrarme como colaborador' : 'Ver mi emprendimiento' }</button>
                 </Link>
             </div>
             <div className="search-container" data-aos="fade-in" data-aos-duration="1600">
