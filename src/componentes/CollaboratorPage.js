@@ -107,8 +107,6 @@ function CollaboratorPage({ userData, datosEmprendimiento, coordenadaXmain, coor
                 <div className="redesSocialesEmprendimiento">
                     <span>Facebook</span>
                     <p className="datos">@{datosEmprendimiento.facebook}</p>
-                    <span>Tiktok</span>
-                    <p className="datos">@{datosEmprendimiento.tiktok}</p>
                     <span>Instagram</span>
                     <p className="datos">@{datosEmprendimiento.instagram}</p>
                     <span>Twitter</span>

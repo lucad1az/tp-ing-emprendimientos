@@ -2,8 +2,9 @@
 TP de Ingeniería de Software - 1er semestre 2024
 
 ## Requerimientos:
-La aplicación web requiere npm 9.5.1 y node 18.16.0 para funcionar.
-
+* node 18.16.0
+* npm 9.5.1 
+* npm config set legacy-peer-deps true (ejecutar) 
 ## Como levantar:
 
 1. Clonar el repositorio localmente.
