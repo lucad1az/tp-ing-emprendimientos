@@ -61,7 +61,13 @@ function App() {
   };
 
   const handleSiguiente = () => {
-    setPaso(paso + 1);
+    if(validateUserData(userData)){
+      setPaso(paso + 1);
+
+    }
+    else{
+      alert("Por favor, complete todos los campos requeridos.");
+    }
   };
 
   const handleVolver = () => {
@@ -69,11 +75,54 @@ function App() {
   };
 
   const handleFinishForm = () => {
-    setLoadingData(true)
-    handleLoadingData();
-    setPaso(-1);
+    if (validateData(datosEmprendimiento)) {
+      setLoadingData(true);
+      handleLoadingData();
+      setPaso(-1);
+    } else {
+      alert("Por favor, complete todos los campos requeridos.");
+    }
   };
+  
+  function validateData(data) {
+    console.log(data);
+    const requiredFields = [
+      'nombreEmprendimiento',
+      'descripcion',
+      'telefonoEmprendimiento',
+      'rubro',
+      'formasDePago',
+      'mailEmprendimiento',
+      'logo',
+      'instagram',
+      'facebook',
+      'direccionEmprendimiento',
+      'twitter',
+    ];
+  
+    for (let field of requiredFields) {
+      if (!data[field] || (Array.isArray(data[field]) && data[field].length === 0)) {
+        return false;
+      }
+    }
+    return true;
+  }
 
+  function validateUserData(data){
+    const requiredFields = [
+      'nombre',
+      'apellido',
+      'telefonoPersona',
+      'mailPersona',
+    ];
+  
+    for (let field of requiredFields) {
+      if (!data[field] || (Array.isArray(data[field]) && data[field].length === 0)) {
+        return false;
+      }
+    }
+    return true;
+  }
   const handleUserDataChange = (name, value) => {
     setUserData(prevState => ({
       ...prevState,
@@ -87,7 +136,6 @@ function App() {
       [name]: value
     }));
   };
-
 
   return (
     <div className="App">
