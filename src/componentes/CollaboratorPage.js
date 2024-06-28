@@ -42,9 +42,6 @@ function CollaboratorPage({ userData, datosEmprendimiento, coordenadaXmain, coor
         setShowSubscriptionSuccessDialog(false); 
     };
 
-    console.log(userData);
-    console.log(datosEmprendimiento);
-
     return (
         <div className="main" data-aos="fade-in" data-aos-duration="1200">
             <header className="header">

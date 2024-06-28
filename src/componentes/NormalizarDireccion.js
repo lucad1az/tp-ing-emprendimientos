@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 
 
-function NormalizarDireccion({ handleCoordenadasChange, handleDireccionNormalizada }) {
+function NormalizarDireccion({ handleCoordenadasChange, handleDireccionNormalizada, disabled }) {
     const [query, setQuery] = useState('');
     const [sugerencias, setSugerencias] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -32,13 +32,10 @@ function NormalizarDireccion({ handleCoordenadasChange, handleDireccionNormaliza
     }
 
     const handleSugerenciasClick = (event) => {
-        console.log(event.target.value);
         setQuery(event.target.value);
         setSugerencias([]);
         obtenerCoordenadas(event.target.value);
         handleDireccionNormalizada(event.target.value);
-        
-
     };
 
     async function obtenerCoordenadas(direccion) {
@@ -49,17 +46,14 @@ function NormalizarDireccion({ handleCoordenadasChange, handleDireccionNormaliza
 
             if(data.errorMessage){
                 alert("Ingrese una dirección con número");
-      
             }
 
-            else if (response.ok) {
+            else if (response.ok && data.direccionesNormalizadas[0].coordenadas.x !== undefined && data.direccionesNormalizadas[0].coordenadas.y !== undefined ) {
                 handleCoordenadasChange(data.direccionesNormalizadas[0].coordenadas.x, data.direccionesNormalizadas[0].coordenadas.y);
-         
             }
             
             else {
                 console.error('Error al obtener las coordenadas', response.statusText);
-             
             }
 
         }
@@ -74,6 +68,7 @@ function NormalizarDireccion({ handleCoordenadasChange, handleDireccionNormaliza
             <input
                 type="text"
                 value={query}
+                disabled={disabled}
                 onChange={handleInputChange}
                 placeholder="Escribe tu dirección"
             />

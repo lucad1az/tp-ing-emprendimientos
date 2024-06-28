@@ -18,9 +18,12 @@ function App() {
 
   const [coordenadaXmain, setCoordenadaXmain] = useState(0);
   const [coordenadaYmain, setCoordenadaYmain] = useState(0);
+  const [coordenadaXmainPersona, setCoordenadaXmainPersona] = useState(0);
+  const [coordenadaYmainPersona, setCoordenadaYmainPersona] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadingData, setLoadingData] = useState(false);
   const [paso, setPaso] = useState(1);
+  const [checked, setChecked] = useState(false);
   const [userData, setUserData] = useState({
     nombre: '',
     apellido: '',
@@ -63,7 +66,6 @@ function App() {
   const handleSiguiente = () => {
     if(validateUserData(userData)){
       setPaso(paso + 1);
-
     }
     else{
       alert("Por favor, complete todos los campos requeridos.");
@@ -75,7 +77,20 @@ function App() {
   };
 
   const handleFinishForm = () => {
-    if (validateData(datosEmprendimiento)) {
+    if(checked) {
+      setCoordenadaXmain(coordenadaXmainPersona)
+      setCoordenadaYmain(coordenadaYmainPersona)
+      datosEmprendimiento.direccionEmprendimiento = userData.direccionPersona
+      if (validateDataChecked(datosEmprendimiento)) {
+        setLoadingData(true);
+        handleLoadingData();
+        setPaso(-1);
+      }
+      else {
+        alert("Por favor, complete todos los campos requeridos.");
+      }
+    }
+    else if (validateData(datosEmprendimiento)) {
       setLoadingData(true);
       handleLoadingData();
       setPaso(-1);
@@ -85,7 +100,6 @@ function App() {
   };
   
   function validateData(data) {
-    console.log(data);
     const requiredFields = [
       'nombreEmprendimiento',
       'descripcion',
@@ -105,6 +119,38 @@ function App() {
         return false;
       }
     }
+
+    if(coordenadaXmain === 0 && coordenadaYmain === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
+  function validateDataChecked(data) {
+    const requiredFields = [
+      'nombreEmprendimiento',
+      'descripcion',
+      'telefonoEmprendimiento',
+      'rubro',
+      'formasDePago',
+      'mailEmprendimiento',
+      'logo',
+      'instagram',
+      'facebook',
+      'twitter',
+    ];
+  
+    for (let field of requiredFields) {
+      if (!data[field] || (Array.isArray(data[field]) && data[field].length === 0)) {
+        return false;
+      }
+    }
+
+    if(coordenadaXmain === 0 && coordenadaYmain === 0) {
+      return false;
+    }
+
     return true;
   }
 
@@ -114,12 +160,17 @@ function App() {
       'apellido',
       'telefonoPersona',
       'mailPersona',
+      'direccionPersona'
     ];
   
     for (let field of requiredFields) {
       if (!data[field] || (Array.isArray(data[field]) && data[field].length === 0)) {
         return false;
       }
+    }
+
+    if(coordenadaXmainPersona === 0 && coordenadaYmainPersona === 0) {
+      return false;
     }
     return true;
   }
@@ -131,10 +182,20 @@ function App() {
   };
 
   const handleDatosEmprendimientoChange = (name, value) => {
+    if(checked) {
+      setCoordenadaXmain(coordenadaXmainPersona)
+      setCoordenadaYmain(coordenadaYmainPersona)
+      datosEmprendimiento.direccionEmprendimiento = userData.direccionPersona
+    }
+
     setDatosEmprendimiento(prevState => ({
       ...prevState,
       [name]: value
     }));
+  };
+
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
   };
 
   return (
@@ -159,6 +220,8 @@ function App() {
                         handleSiguiente={handleSiguiente}
                         userData={userData}
                         handleUserDataChange={handleUserDataChange}
+                        setCoordenadaXmainPersona={setCoordenadaXmainPersona}
+                        setCoordenadaYmainPersona={setCoordenadaYmainPersona}
                       />
                       :
                       <DatosEmprendimiento
@@ -168,6 +231,8 @@ function App() {
                         handleDatosEmprendimientoChange={handleDatosEmprendimientoChange}
                         setCoordenadaXmain={setCoordenadaXmain}
                         setCoordenadaYmain={setCoordenadaYmain}
+                        checked={checked}
+                        setChecked={handleCheckboxChange}
                       />
                     }
                   </form>

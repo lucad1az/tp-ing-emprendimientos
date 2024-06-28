@@ -3,8 +3,9 @@ import Mapa from './Mapa';
 import rubros from '../static/rubros';
 import formas_de_pago from '../static/formas-de-pago';
 import NormalizarDireccion from './NormalizarDireccion';
+import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 
-function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimiento, handleDatosEmprendimientoChange, setCoordenadaXmain, setCoordenadaYmain }) {
+function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimiento, handleDatosEmprendimientoChange, setCoordenadaXmain, setCoordenadaYmain, checked, setChecked }) {
 
   const [coordenadaX, setCoordenadaX] = useState(-58.700484309345335);
   const [coordenadaY, setCoordenadaY] = useState(-34.523109507513524);
@@ -12,7 +13,6 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
   const [logoPreview, setLogoPreview] = useState("");
 
   const handleChangeEmprendimiento = (event) => {
-    console.log(event.target);
     const { name, value } = event.target;
     handleDatosEmprendimientoChange(name, value);
 
@@ -33,13 +33,10 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
 
   const handleDireccionNormalizada = (direccion) => {
 
-
     if(coordenadaX !== undefined && coordenadaY !== undefined){
       handleDatosEmprendimientoChange('direccionEmprendimiento', direccion);
       setDireccionNormalizada(direccion);
     }
-
-
   };
 
 
@@ -230,11 +227,15 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
         <div className="datos-der">
           <Mapa direccionNormalizada={direccionNormalizada} coordenadaX={coordenadaX} coordenadaY={coordenadaY} />
           <div className="mb-5 text-start">
+            <FormGroup>
+              <FormControlLabel control={<Checkbox checked={checked} onChange={setChecked}/>} label="Mi direccion particular es la misma que la de mi emprendimiento." />
+            </FormGroup>
             <label htmlFor="direccionEmprendimiento" className="form-label">Ingrese la direccion del emprendimiento</label>
             <div className="d-flex justify-content-center">
               <NormalizarDireccion
                 value={datosEmprendimiento.direccionEmprendimiento}
                 onChange={handleChange}
+                disabled={checked}
                 handleCoordenadasChange={handleCoordenadasChange}
                 handleDireccionNormalizada={handleDireccionNormalizada}
               />

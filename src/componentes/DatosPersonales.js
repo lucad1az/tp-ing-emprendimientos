@@ -3,7 +3,7 @@ import Mapa from './Mapa';
 import { useState } from 'react';
 import NormalizarDireccion from './NormalizarDireccion';
 
-function DatosPersonales({ handleSiguiente, userData, handleUserDataChange }) {
+function DatosPersonales({ handleSiguiente, userData, handleUserDataChange, setCoordenadaXmainPersona, setCoordenadaYmainPersona }) {
 
   const [coordenadaX, setCoordenadaX] = useState(-58.700484309345335);
   const [coordenadaY, setCoordenadaY] = useState(-34.523109507513524);
@@ -17,10 +17,15 @@ function DatosPersonales({ handleSiguiente, userData, handleUserDataChange }) {
   const handleCoordenadasChange = (coordenadaX, coordenadaY) => {
     setCoordenadaX(coordenadaX);
     setCoordenadaY(coordenadaY);
+    setCoordenadaXmainPersona(coordenadaX);
+    setCoordenadaYmainPersona(coordenadaY);
   };
 
   const handleDireccionNormalizada = (direccion) => {
-    setDireccionNormalizada(direccion);
+    if(coordenadaX !== undefined && coordenadaY !== undefined){
+      handleUserDataChange('direccionPersona', direccion)
+      setDireccionNormalizada(direccion);
+    }
   };
 
 
