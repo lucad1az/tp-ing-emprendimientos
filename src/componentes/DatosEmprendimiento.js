@@ -3,8 +3,9 @@ import Mapa from './Mapa';
 import rubros from '../static/rubros';
 import formas_de_pago from '../static/formas-de-pago';
 import NormalizarDireccion from './NormalizarDireccion';
+import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 
-function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimiento, handleDatosEmprendimientoChange, setCoordenadaXmain, setCoordenadaYmain }) {
+function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimiento, handleDatosEmprendimientoChange, setCoordenadaXmain, setCoordenadaYmain, checked, setChecked }) {
 
   const [coordenadaX, setCoordenadaX] = useState(-58.700484309345335);
   const [coordenadaY, setCoordenadaY] = useState(-34.523109507513524);
@@ -14,11 +15,13 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
   const handleChangeEmprendimiento = (event) => {
     const { name, value } = event.target;
     handleDatosEmprendimientoChange(name, value);
+
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     handleChangeEmprendimiento(name, value);
+    
   };
 
   const handleCoordenadasChange = (coordenadaX, coordenadaY) => {
@@ -29,8 +32,13 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
   };
 
   const handleDireccionNormalizada = (direccion) => {
-    setDireccionNormalizada(direccion);
+
+    if(coordenadaX !== undefined && coordenadaY !== undefined){
+      handleDatosEmprendimientoChange('direccionEmprendimiento', direccion);
+      setDireccionNormalizada(direccion);
+    }
   };
+
 
   const handleFormasDePagoChange = (event) => {
     const { options } = event.target;
@@ -41,6 +49,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
       }
     }
     handleDatosEmprendimientoChange('formasDePago', selectedFormasDePago);
+
   };
 
   const handleLogoChange = (event) => {
@@ -72,6 +81,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 className="form-control" 
                 value={datosEmprendimiento.nombreEmprendimiento}
                 onChange={handleChangeEmprendimiento}
+                required
               />
             </div>
           </div>
@@ -85,6 +95,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 className="form-control" 
                 value={datosEmprendimiento.descripcion}
                 onChange={handleChangeEmprendimiento}
+                required
               />
             </div>
           </div>
@@ -99,6 +110,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 placeholder="Tel. de línea" 
                 value={datosEmprendimiento.telefonoEmprendimiento}
                 onChange={handleChangeEmprendimiento}
+                required
               />
             </div>
           </div>
@@ -111,6 +123,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 className="form-control" 
                 value={datosEmprendimiento.rubro}
                 onChange={handleChangeEmprendimiento}
+                required
               >
                 <option disabled hidden value="">Seleccione el rubro del emprendimiento</option>
                 {rubros.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
@@ -128,6 +141,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 value={datosEmprendimiento.formasDePago}
                 onChange={handleFormasDePagoChange}
                 style={{height:"100px"}}
+                required
               >
                 {formas_de_pago.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
               </select>
@@ -143,6 +157,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 className="form-control" 
                 value={datosEmprendimiento.mailEmprendimiento}
                 onChange={handleChangeEmprendimiento}
+                required
               />
             </div>
           </div>
@@ -155,6 +170,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                 type="file" 
                 className="form-control" 
                 onChange={handleLogoChange}
+                required
               />
               {logoPreview && <img src={logoPreview} alt="Vista previa del logo" className="mt-3" style={{ maxWidth: '200px' }} />}
             </div>
@@ -170,6 +186,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                   className="form-control" 
                   value={datosEmprendimiento.instagram}
                   onChange={handleChangeEmprendimiento}
+                  required
                 />
               </div>
             </div>
@@ -183,6 +200,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                   className="form-control" 
                   value={datosEmprendimiento.facebook}
                   onChange={handleChangeEmprendimiento}
+                  required
                 />
               </div>
             </div>
@@ -199,6 +217,7 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
                   placeholder="ej. @<usuario>" 
                   value={datosEmprendimiento.twitter}
                   onChange={handleChangeEmprendimiento}
+                  required
                 />
               </div>
             </div>
@@ -208,11 +227,15 @@ function DatosEmprendimiento({ handleVolver, handleFinishForm, datosEmprendimien
         <div className="datos-der">
           <Mapa direccionNormalizada={direccionNormalizada} coordenadaX={coordenadaX} coordenadaY={coordenadaY} />
           <div className="mb-5 text-start">
+            <FormGroup>
+              <FormControlLabel control={<Checkbox checked={checked} onChange={setChecked}/>} label="Mi direccion particular es la misma que la de mi emprendimiento." />
+            </FormGroup>
             <label htmlFor="direccionEmprendimiento" className="form-label">Ingrese la direccion del emprendimiento</label>
             <div className="d-flex justify-content-center">
               <NormalizarDireccion
                 value={datosEmprendimiento.direccionEmprendimiento}
                 onChange={handleChange}
+                disabled={checked}
                 handleCoordenadasChange={handleCoordenadasChange}
                 handleDireccionNormalizada={handleDireccionNormalizada}
               />

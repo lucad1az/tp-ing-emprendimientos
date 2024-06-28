@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 
-function NormalizarDireccion({handleCoordenadasChange, handleDireccionNormalizada}) {
+
+function NormalizarDireccion({ handleCoordenadasChange, handleDireccionNormalizada, disabled }) {
     const [query, setQuery] = useState('');
     const [sugerencias, setSugerencias] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -29,42 +30,50 @@ function NormalizarDireccion({handleCoordenadasChange, handleDireccionNormalizad
             }
         }
     }
-    
+
     const handleSugerenciasClick = (event) => {
         setQuery(event.target.value);
         setSugerencias([]);
-        handleDireccionNormalizada(event.target.value);
         obtenerCoordenadas(event.target.value);
-    
+        handleDireccionNormalizada(event.target.value);
     };
 
-    async function obtenerCoordenadas(direccion){
+    async function obtenerCoordenadas(direccion) {
         try {
             const response = await fetch(`http://servicios.usig.buenosaires.gob.ar/normalizar?direccion=${encodeURIComponent(direccion)}&geocodificar=true`);
+            const data = await response.json();
 
-            if (response.ok) {
-                const data = await response.json();
+
+            if(data.errorMessage){
+                alert("Ingrese una dirección con número");
+            }
+
+            else if (response.ok && data.direccionesNormalizadas[0].coordenadas.x !== undefined && data.direccionesNormalizadas[0].coordenadas.y !== undefined ) {
                 handleCoordenadasChange(data.direccionesNormalizadas[0].coordenadas.x, data.direccionesNormalizadas[0].coordenadas.y);
-            } else {
+            }
+            
+            else {
                 console.error('Error al obtener las coordenadas', response.statusText);
             }
 
         }
-        catch(error) {
+        catch (error) {
             console.error('Error de red', error);
+          
         }
     }
 
-    return(
+    return (
         <div>
             <input
                 type="text"
                 value={query}
+                disabled={disabled}
                 onChange={handleInputChange}
                 placeholder="Escribe tu dirección"
             />
             {loading && <div>Cargando...</div>}
-            <select style={{minWidth:"100px",width:"100%", marginTop:"10px", minHeight:"100px"}}
+            <select style={{ minWidth: "100px", width: "100%", marginTop: "10px", minHeight: "100px" }}
                 className="selectSugerencias"
                 id="sugerencias"
                 onChange={handleSugerenciasClick}
